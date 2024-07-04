@@ -2,19 +2,7 @@
 import { NextPage } from 'next'
 
 // ** MUI components
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  CssBaseline,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  InputAdornment,
-  Typography,
-  useTheme
-} from '@mui/material'
+import { Box, Button, CssBaseline, IconButton, InputAdornment, Typography, useTheme } from '@mui/material'
 
 // ** Custom components
 import CustomTextField from 'src/components/text-field'
@@ -31,8 +19,8 @@ import { useState } from 'react'
 
 // ** Images
 import Image from 'next/image'
-import LoginDark from '/public/images/login-dark.png'
-import LoginLight from '/public/images/login-light.png'
+import RegisterLight from '/public/images/register-light.png'
+import RegisterDark from '/public/images/register-light.png'
 import Link from 'next/link'
 
 type TProps = {}
@@ -40,11 +28,13 @@ type TProps = {}
 type TDefaultValue = {
   email: string
   password: string
+  confirmPassword: string
 }
 
-const LoginPage: NextPage<TProps> = () => {
+const RegisterPage: NextPage<TProps> = () => {
   // State
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isRemember, setIsRemember] = useState(false)
 
   // Theme
@@ -58,12 +48,18 @@ const LoginPage: NextPage<TProps> = () => {
       .matches(
         PASSWORD_REG,
         'The password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character'
-      )
+      ),
+    confirmPassword: yup
+      .string()
+      .required('The field is required')
+      .matches(PASSWORD_REG, 'Invalid password')
+      .oneOf([yup.ref('password'), ''], 'The confirm must be matched with password')
   })
 
   const defaultValues: TDefaultValue = {
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   }
 
   const {
@@ -106,7 +102,7 @@ const LoginPage: NextPage<TProps> = () => {
         }}
       >
         <Image
-          src={theme.palette.mode === 'light' ? LoginLight : LoginDark}
+          src={theme.palette.mode === 'light' ? RegisterLight : RegisterDark}
           alt='login image'
           style={{
             height: 'auto',
@@ -125,7 +121,7 @@ const LoginPage: NextPage<TProps> = () => {
           }}
         >
           <Typography component='h1' variant='h5'>
-            Sign in
+            Register
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
             <Box sx={{ mt: 2, width: '300px' }}>
@@ -186,29 +182,52 @@ const LoginPage: NextPage<TProps> = () => {
                 name='password'
               />
             </Box>
-            <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name='rememberMe'
-                    checked={isRemember}
-                    onChange={e => setIsRemember(e.target.checked)}
-                    color='primary'
+            <Box sx={{ mt: 2, width: '300px' }}>
+              <Controller
+                control={control}
+                rules={{
+                  required: true
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <CustomTextField
+                    required
+                    fullWidth
+                    label='Confirm password'
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    placeholder='Enter confirm password'
+                    helperText={errors?.confirmPassword?.message}
+                    error={Boolean(errors?.confirmPassword)}
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <IconButton edge='end' onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                            {showConfirmPassword ? (
+                              <Icon icon='material-symbols:visibility-outline' />
+                            ) : (
+                              <Icon icon='material-symbols:visibility-off-outline' />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
                   />
-                }
-                label='Remember me'
+                )}
+                name='confirmPassword'
               />
-              <Typography>Forgot password?</Typography>
             </Box>
+            <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}></Box>
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-              Sign In
+              Register
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
               <Typography>{'Already have account?'}</Typography>
-              <Link href='/register'>{'Register'}</Link>
+              <Link href='/login'>{'Login'}</Link>
             </Box>
-            <Typography sx={{ textAlign: 'center', mt: 2, mb: 2 }}>Or</Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+            {/* <Typography sx={{ textAlign: 'center', mt: 2, mb: 2 }}>Or</Typography> */}
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
               <IconButton sx={{ color: '#497ce2' }}>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -241,7 +260,7 @@ const LoginPage: NextPage<TProps> = () => {
                   ></path>
                 </svg>
               </IconButton>
-            </Box>
+            </Box> */}
           </form>
         </Box>
       </Box>
@@ -249,4 +268,4 @@ const LoginPage: NextPage<TProps> = () => {
   )
 }
 
-export default LoginPage
+export default RegisterPage
