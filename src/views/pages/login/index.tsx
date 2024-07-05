@@ -29,7 +29,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { EMAIL_REG, PASSWORD_REG } from 'src/configs/regex'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 // ** Images
 import LoginDark from '/public/images/login-dark.png'
