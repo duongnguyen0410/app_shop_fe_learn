@@ -6,10 +6,8 @@ import {
   Box,
   Button,
   Checkbox,
-  Container,
   CssBaseline,
   FormControlLabel,
-  Grid,
   IconButton,
   InputAdornment,
   Typography,
@@ -88,7 +86,7 @@ const LoginPage: NextPage<TProps> = () => {
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
         alignContent: 'center',
-        padding: '20px'
+        padding: '40px'
       }}
     >
       <Box
@@ -109,7 +107,7 @@ const LoginPage: NextPage<TProps> = () => {
           src={theme.palette.mode === 'light' ? LoginLight : LoginDark}
           alt='login image'
           style={{
-            height: 'auto',
+            height: '700px',
             width: 'auto'
           }}
         />
@@ -205,7 +203,14 @@ const LoginPage: NextPage<TProps> = () => {
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
               <Typography>{'Already have account?'}</Typography>
-              <Link href='/register'>{'Register'}</Link>
+              <Link
+                style={{
+                  color: theme.palette.mode === 'light' ? theme.palette.common.black : theme.palette.common.white
+                }}
+                href='/register'
+              >
+                {'Register'}
+              </Link>
             </Box>
             <Typography sx={{ textAlign: 'center', mt: 2, mb: 2 }}>Or</Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>

@@ -21,6 +21,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import RegisterLight from '/public/images/register-light.png'
 import RegisterDark from '/public/images/register-light.png'
+
 import Link from 'next/link'
 
 type TProps = {}
@@ -35,7 +36,6 @@ const RegisterPage: NextPage<TProps> = () => {
   // State
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isRemember, setIsRemember] = useState(false)
 
   // Theme
   const theme = useTheme()
@@ -84,7 +84,7 @@ const RegisterPage: NextPage<TProps> = () => {
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
         alignContent: 'center',
-        padding: '20px'
+        padding: '40px'
       }}
     >
       <Box
@@ -105,7 +105,7 @@ const RegisterPage: NextPage<TProps> = () => {
           src={theme.palette.mode === 'light' ? RegisterLight : RegisterDark}
           alt='login image'
           style={{
-            height: 'auto',
+            height: '700px',
             width: 'auto'
           }}
         />
@@ -224,7 +224,14 @@ const RegisterPage: NextPage<TProps> = () => {
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
               <Typography>{'Already have account?'}</Typography>
-              <Link href='/login'>{'Login'}</Link>
+              <Link
+                style={{
+                  color: theme.palette.mode === 'light' ? theme.palette.common.black : theme.palette.common.white
+                }}
+                href='/login'
+              >
+                {'Login'}
+              </Link>
             </Box>
             {/* <Typography sx={{ textAlign: 'center', mt: 2, mb: 2 }}>Or</Typography> */}
             {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
