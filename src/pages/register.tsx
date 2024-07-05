@@ -1,7 +1,6 @@
 // ** Import Next
 import { NextPage } from 'next'
-
-import RegisterPage from '../../views/pages/register'
+import RegisterPage from 'src/views/pages/register'
 
 type TProps = {}
 
