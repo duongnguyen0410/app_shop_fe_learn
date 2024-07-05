@@ -18,6 +18,10 @@ import {
 import CustomTextField from 'src/components/text-field'
 import Icon from 'src/components/Icon'
 
+// ** Next components
+import Image from 'next/image'
+import Link from 'next/link'
+
 // ** React hooks
 import { Controller, useForm } from 'react-hook-form'
 
@@ -28,10 +32,11 @@ import { EMAIL_REG, PASSWORD_REG } from 'src/configs/regex'
 import { useState } from 'react'
 
 // ** Images
-import Image from 'next/image'
 import LoginDark from '/public/images/login-dark.png'
 import LoginLight from '/public/images/login-light.png'
-import Link from 'next/link'
+
+// ** Hooks
+import { useAuth } from 'src/hooks/useAuth'
 
 type TProps = {}
 
@@ -44,6 +49,9 @@ const LoginPage: NextPage<TProps> = () => {
   // State
   const [showPassword, setShowPassword] = useState(false)
   const [isRemember, setIsRemember] = useState(false)
+
+  // Context
+  const { login } = useAuth()
 
   // Theme
   const theme = useTheme()
@@ -75,6 +83,7 @@ const LoginPage: NextPage<TProps> = () => {
   })
 
   const onSubmit = (data: { email: string; password: string }) => {
+    login({ ...data, rememberMe: isRemember })
     console.log('data', { data, errors })
   }
 
@@ -205,7 +214,7 @@ const LoginPage: NextPage<TProps> = () => {
               <Typography>{'Already have account?'}</Typography>
               <Link
                 style={{
-                  color: theme.palette.mode === 'light' ? theme.palette.common.black : theme.palette.common.white
+                  color: theme.palette.primary.main
                 }}
                 href='/register'
               >
