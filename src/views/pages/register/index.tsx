@@ -22,8 +22,6 @@ import Image from 'next/image'
 import RegisterLight from '/public/images/register-light.png'
 import RegisterDark from '/public/images/register-light.png'
 
-import LoginLight from '/public/images/login-light.png'
-import LoginDark from '/public/images/login-light.png'
 import Link from 'next/link'
 
 type TProps = {}
@@ -38,7 +36,6 @@ const RegisterPage: NextPage<TProps> = () => {
   // State
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isRemember, setIsRemember] = useState(false)
 
   // Theme
   const theme = useTheme()
